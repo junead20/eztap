@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EZTAP - Tasks</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 900px; margin: auto; padding: 40px 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    h2 { text-align: center; margin-bottom: 30px; }
+    .tabs { display: flex; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+    .tabs button { padding: 10px 25px; margin: 5px; border: none; background-color: #000; color: #fff; border-radius: 5px; cursor: pointer; font-weight: 500; transition: background 0.3s; }
+    .tabs button.active { background-color: #000; }
+    .tab-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+    .tab-section.active { display: block; }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    form { display: flex; flex-direction: column; gap: 15px; }
+    label { font-weight: bold; margin-bottom: 4px; }
+    input, select { padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+    button.submit-btn { background-color: #28a745; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+    .task-list { margin-top: 30px; }
+    .task-card { background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+    .task-card h4 { margin: 0 0 10px; }
+    .task-card p { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html">EZTAP</a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tasks.html" class="active">Tasks</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html">Login</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h2>📋 EZTAP – Tasks</h2>
+    <div class="tabs">
+      <button id="postTabBtn" class="active" onclick="switchTab('post')">➕ Post a Task</button>
+      <button id="searchTabBtn" onclick="switchTab('search')">🔍 Search a Task</button>
+    </div>
+
+    <!-- Post Task Section -->
+    <div id="post" class="tab-section active">
+      <form id="postTaskForm">
+        <label>Category</label>
+        <select id="taskCategory" required>
+          <option value="">Select Category</option>
+          <option>Cooking Help</option>
+          <option>Cleaning Service</option>
+          <option>Pet Care</option>
+          <option>Gardening</option>
+        </select>
+        <label>Date</label>
+        <input type="date" id="taskDate" required />
+        <label>Time</label>
+        <input type="time" id="taskTime" required />
+        <label>Address</label>
+        <input type="text" id="taskAddress" placeholder="Enter full address" required />
+        <label>Budget (₹)</label>
+        <input type="number" id="taskBudget" required />
+        <label>Estimated Hours</label>
+        <input type="number" id="taskHours" required />
+        <button type="submit" class="submit-btn">Submit Task</button>
+      </form>
+    </div>
+
+    <!-- Search Task Section -->
+    <div id="search" class="tab-section">
+      <form id="searchForm">
+        <label>Place</label>
+        <input type="text" id="searchPlace" placeholder="e.g. Hyderabad" />
+        <label>Category</label>
+        <select id="searchCategory">
+          <option value="">All Categories</option>
+          <option>Cooking Help</option>
+          <option>Cleaning Service</option>
+          <option>Pet Care</option>
+          <option>Gardening</option>
+        </select>
+        <button type="submit" class="submit-btn">Search Tasks</button>
+      </form>
+      <div id="taskList" class="task-list"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 EZTAP. All Rights Reserved.</p>
+  </footer>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll(".tab-section").forEach(sec => sec.classList.remove("active"));
+  document.querySelectorAll(".tabs button").forEach(btn => btn.classList.remove("active"));
+  document.getElementById(tab).classList.add("active");
+  document.getElementById(tab + "TabBtn").classList.add("active");
+
+  if (tab === "search") {
+    loadTasks();
+  }
+}
+
+function getTasks() {
+  return JSON.parse(localStorage.getItem("tasks") || "[]");
+}
+function saveTasks(tasks) {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Post Task with date/time validation
+document.getElementById("postTaskForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const taskDate = document.getElementById("taskDate").value;
+  const taskTime = document.getElementById("taskTime").value;
+  const taskDateTime = new Date(`${taskDate}T${taskTime}`);
+  const now = new Date();
+
+  // Check for invalid or past date/time
+  if (!taskDate || !taskTime || taskDateTime <= now) {
+    alert("❌ Invalid date or time. Please select a future date and time.");
+    return;
+  }
+
+  const task = {
+    category: document.getElementById("taskCategory").value,
+    date: taskDate,
+    time: taskTime,
+    address: document.getElementById("taskAddress").value,
+    budget: document.getElementById("taskBudget").value,
+    hours: document.getElementById("taskHours").value
+  };
+
+  const tasks = getTasks();
+  tasks.push(task);
+  saveTasks(tasks);
+  alert("✅ Task posted successfully!");
+  e.target.reset();
+});
+
+document.getElementById("searchForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  loadTasks();
+});
+
+function loadTasks() {
+  const place = document.getElementById("searchPlace").value.toLowerCase();
+  const category = document.getElementById("searchCategory").value;
+  const tasks = getTasks().filter(t => {
+    return (category === "" || t.category === category) &&
+           (place === "" || t.address.toLowerCase().includes(place));
+  });
+
+  const list = document.getElementById("taskList");
+  list.innerHTML = tasks.length ? "" : "<p>No tasks found.</p>";
+
+  tasks.forEach(task => {
+    const taskDateTime = new Date(`${task.date}T${task.time}`);
+    const now = new Date();
+    const isFinished = taskDateTime < now;
+    const status = isFinished
+      ? `<span style="color:red;font-weight:bold;">✅ Finished</span>`
+      : `<span style="color:green;font-weight:bold;">⏳ Upcoming</span>`;
+
+    const dateFormatted = taskDateTime.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    const timeFormatted = taskDateTime.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+
+    const card = document.createElement("div");
+    card.className = "task-card";
+    card.innerHTML = `
+      <h4>${task.category}</h4>
+      <p><strong>Place:</strong> ${task.address}</p>
+      <p><strong>Date:</strong> ${dateFormatted}</p>
+      <p><strong>Time:</strong> ${timeFormatted}</p>
+      <p><strong>Budget:</strong> ₹${task.budget}</p>
+      <p><strong>Duration:</strong> ${task.hours} hrs</p>
+      <p><strong>Status:</strong> ${status}</p>
+    `;
+    list.appendChild(card);
+  });
+}
+</script>
+</body>
+</html>

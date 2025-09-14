@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - EZTAP</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .register-section {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 16px 0;
+      box-sizing: border-box;
+    }
+    .btn-primary {
+      background-color: #28a745;
+      color: white;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background-color: #218838;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: -12px;
+      margin-bottom: 12px;
+    }
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html">EZTAP</a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html">Login</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Registration Section -->
+  <section class="register-section">
+    <h2>Create an EZTAP Account</h2>
+    <form id="registerForm">
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" class="input-field" placeholder="Enter 10-digit phone number" required />
+      <div id="phoneError" class="error-message"></div>
+
+      <label for="email">Email:</label>
+      <input type="text" id="email" class="input-field" placeholder="Enter email" required />
+      <div id="emailError" class="error-message"></div>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" class="input-field" placeholder="Create password" required />
+      <div id="passwordError" class="error-message"></div>
+
+      <button type="submit" class="btn-primary">Register</button>
+      <p style="text-align:center;">Already have an account? <a href="login.html">Login here</a></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 EZTAP - Tap. Task. Trust.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function validatePhone() {
+      const phone = document.getElementById("phone").value.trim();
+      const phoneError = document.getElementById("phoneError");
+      const isValid = /^[0-9]{10}$/.test(phone);
+      phoneError.textContent = isValid ? "" : "Enter a valid 10-digit phone number.";
+      return isValid;
+    }
+
+    function validateEmail() {
+      const email = document.getElementById("email").value.trim();
+      const emailError = document.getElementById("emailError");
+      const isValid = /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+      emailError.textContent = isValid ? "" : "Enter a valid email address.";
+      return isValid;
+    }
+
+    function validatePassword() {
+      const password = document.getElementById("password").value;
+      const passwordError = document.getElementById("passwordError");
+
+      const lengthOK = password.length >= 6;
+      const hasNumber = /\d/.test(password);
+      const hasLetter = /[a-zA-Z]/.test(password);
+
+      const isValid = lengthOK && hasNumber && hasLetter;
+
+      passwordError.textContent = isValid
+        ? ""
+        : "Password must be 6+ characters and include letters & numbers.";
+
+      return isValid;
+    }
+
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      const validPhone = validatePhone();
+      const validEmail = validateEmail();
+      const validPassword = validatePassword();
+
+      if (!validPhone || !validEmail || !validPassword) return;
+
+      const users = JSON.parse(localStorage.getItem("users") || "[]");
+
+      // Prevent duplicate accounts
+      const exists = users.find(u => u.phone === phone || u.email === email);
+      if (exists) {
+        alert("User with this phone or email already exists!");
+        return;
+      }
+
+      users.push({ phone, email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Registration successful! Redirecting to login page...");
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EZTAP - Services</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+    header.navbar .logo a {
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    header.navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    header.navbar ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .services {
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .category-card {
+      width: 220px;
+      border: 1px solid #ccc;
+      padding: 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .category-card:hover {
+      transform: scale(1.05);
+      background-color: #f9f9f9;
+    }
+    .category-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .task-list {
+      margin-top: 30px;
+    }
+    .task-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .task-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+    .back-btn {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    footer {
+      background-color:  #47b2ec;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+    <header class="navbar">
+    <div class="logo">
+      <a href="index.html">EZTAP</a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html" class="active">Login</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Services Section -->
+  <section class="services" id="serviceSection">
+    <h2>Our Popular Categories</h2>
+    <p>Select a category to view available tasks and average pricing.</p>
+    <div class="categories" id="categoryGrid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 EZTAP. All Rights Reserved.</p>
+  </footer>
+
+  <!-- JS Script -->
+  <script>
+    const categories = [
+      {
+        name: "Cooking Help",
+        image: "https://images.contentstack.io/v3/assets/bltcedd8dbd5891265b/blt6400b0729a43c47a/66707e04cd91a56a4cdd187a/cooking-therapy-hero.jpeg?q=70&width=3840&auto=webp",
+        tasks: [
+          { name: "Home-cooked Meals", price: "₹200/hr" },
+          { name: "Party Catering", price: "₹500/hr" },
+          { name: "Tiffin Services", price: "₹150/box" }
+        ]
+      },
+      {
+        name: "Cleaning Services",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT_dS1QsdaX1VsFA7B0c6_KgVobwupwcadwQ&s",
+        tasks: [
+          { name: "Kitchen Cleaning", price: "₹300" },
+          { name: "Full Home Cleaning", price: "₹1200" },
+          { name: "Bathroom Cleaning", price: "₹200" }
+        ]
+      },
+      {
+        name: "Pet Care",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLV8EkFf12Q60i9Zcpg_MXa9rpaELLjlS8Iw&s",
+        tasks: [
+          { name: "Dog Walking", price: "₹100/hr" },
+          { name: "Pet Grooming", price: "₹400" },
+          { name: "Pet Sitting", price: "₹200/hr" }
+        ]
+      },
+      {
+        name: "Plumbing",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1rUpx-jZkkNMkUtCjkhf9kuI7PnqSZueS8A&s",
+        tasks: [
+          { name: "Tap Fixing", price: "₹250" },
+          { name: "Leak Repair", price: "₹400" },
+          { name: "Pipe Installation", price: "₹800" }
+        ]
+      },
+      {
+        name: "Electrical",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZyuo0kRWycAY-hfxomxDQk6DXzBkgQJoa3A&s",
+        tasks: [
+          { name: "Fan Repair", price: "₹200" },
+          { name: "Switchboard Fix", price: "₹150" },
+          { name: "New Wiring", price: "₹1000" }
+        ]
+      },
+      {
+        name: "Delivery",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWxAwaO-b1oM3coj4XK9lwf0JQc9TV_vuamQ&s",
+        tasks: [
+          { name: "Grocery Delivery", price: "₹50/order" },
+          { name: "Courier Pickup", price: "₹70" },
+          { name: "Medicine Delivery", price: "₹40" }
+        ]
+      },
+      {
+        name: "Gardening",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQplZXpuUCm5spbgAyrSVcuP_Rqz83jlVhQvQ&s",
+        tasks: [
+          { name: "Lawn Mowing", price: "₹500" },
+          { name: "Planting", price: "₹300" },
+          { name: "Weeding", price: "₹200" }
+        ]
+      },
+      {
+        name: "Tutoring",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQv8_ML_-XdX60pU3hNzN5XlO68upgCd5hHgQ&s",
+        tasks: [
+          { name: "Math Coaching", price: "₹400/hr" },
+          { name: "English Tutoring", price: "₹350/hr" },
+          { name: "Science Classes", price: "₹450/hr" }
+        ]
+      },
+      {
+        name: "Home Repair",
+        image: "https://5.imimg.com/data5/SELLER/Default/2022/10/OP/LP/TW/8492573/house-repairing-service.jpg",
+        tasks: [
+          { name: "Furniture Fixing", price: "₹300" },
+          { name: "Window Repair", price: "₹250" },
+          { name: "Door Adjustment", price: "₹200" }
+        ]
+      },
+      {
+        name: "Carpentry",
+        image: "https://cdn.shopify.com/s/files/1/0600/9526/6861/files/indian-wood-working-history-teakwood_1024x1024.jpg?v=1708286720",
+        tasks: [
+          { name: "Shelf Making", price: "₹1500" },
+          { name: "Chair Repair", price: "₹300" },
+          { name: "Wood Polishing", price: "₹700" }
+        ]
+      },
+      {
+        name: "Appliance Repair",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgkjROKa9FJmz47lferskYjSqz9LF7HONtJFobiOxkD5oubSBreSVztXb02U9TBVKyNWQ&usqp=CAU",
+        tasks: [
+          { name: "AC Servicing", price: "₹500" },
+          { name: "Washing Machine Repair", price: "₹700" },
+          { name: "Fridge Checkup", price: "₹600" }
+        ]
+      },
+      {
+        name: "Elderly Care",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNS-I1ywbQH_NjKwwqqfck6vgA_UlyFAaiBQ&s",
+        tasks: [
+          { name: "Assisted Walking", price: "₹250/hr" },
+          { name: "Medication Reminders", price: "₹150" },
+          { name: "Meal Assistance", price: "₹300" }
+        ]
+      },
+      {
+        name: "Babysitting",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFmUjvIBC_kNASTsyUDojVBl0ZXc1RaRchIw&s",
+        tasks: [
+          { name: "Daytime Sitting", price: "₹400/hr" },
+          { name: "Night Shift", price: "₹500/hr" },
+          { name: "Homework Help", price: "₹350/hr" }
+        ]
+      },
+      {
+        name: "Event Help",
+        image: "https://vuniversity.in/wp-content/uploads/2023/08/Basic-food-beverage-service.png",
+        tasks: [
+          { name: "Decoration", price: "₹1000" },
+          { name: "Serving", price: "₹300/hr" },
+          { name: "Setup/Cleanup", price: "₹700" }
+        ]
+      },
+      {
+        name: "Photography",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLxjlqh1KJ4KaL7BVgXG9IkSOoAUKzOTwxrQ&s",
+        tasks: [
+          { name: "Event Shoot", price: "₹2000/day" },
+          { name: "Portrait", price: "₹800" },
+          { name: "Editing", price: "₹500" }
+        ]
+      },
+      {
+        name: "Beauty Services",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi1DiLi1e1RWEI4brS0ydyTWmgoAMjUTYPpg&s",
+        tasks: [
+          { name: "Facial", price: "₹600" },
+          { name: "Haircut", price: "₹300" },
+          { name: "Makeup", price: "₹1000" }
+        ]
+      },
+      {
+        name: "Car Wash",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwvX2XLnSCQe4d-UbU3H1JbhOFGvjc0lPU4g&s",
+        tasks: [
+          { name: "Exterior Wash", price: "₹250" },
+          { name: "Interior Cleaning", price: "₹300" },
+          { name: "Polishing", price: "₹500" }
+        ]
+      },
+      {
+        name: "Tech Support",
+        image: "https://5.imimg.com/data5/SELLER/Default/2023/7/323414708/VN/KN/UF/12889775/huawei-onu-wifi-router-repair-service.jpg",
+        tasks: [
+          { name: "Laptop Setup", price: "₹600" },
+          { name: "WiFi Troubleshooting", price: "₹300" },
+          { name: "OS Installation", price: "₹500" }
+        ]
+      },
+      {
+        name: "Laundry & Ironing",
+        image: "https://www.callyourdhobi.com/assets/Images/Services/Laundry/6.webp",
+        tasks: [
+          { name: "Washing", price: "₹15/cloth" },
+          { name: "Ironing", price: "₹10/cloth" },
+          { name: "Pickup & Drop", price: "₹50" }
+        ]
+      },
+      {
+        name: "Fitness Trainer",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRsyuoIsy1Zl4j9XBGUyOcCq3NCrKpnCvZ5A&s",
+        tasks: [
+          { name: "Yoga", price: "₹500/hr" },
+          { name: "Strength Training", price: "₹700/hr" },
+          { name: "Zumba", price: "₹600/hr" }
+        ]
+      }
+    ];
+
+    const categoryGrid = document.getElementById("categoryGrid");
+    const serviceSection = document.getElementById("serviceSection");
+
+    // Render Category Cards
+    categories.forEach(cat => {
+      const card = document.createElement("div");
+      card.className = "category-card";
+      card.innerHTML = `
+        <img src="${cat.image}" alt="${cat.name}" />
+        <h3>${cat.name}</h3>
+      `;
+      card.addEventListener("click", () => showTasks(cat));
+      categoryGrid.appendChild(card);
+    });
+    // Auto-open section based on URL hash (e.g., #cooking)
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash.slice(1).toLowerCase();
+  if (hash) {
+    const matchedCategory = categories.find(cat =>
+      cat.name.toLowerCase().includes(hash)
+    );
+    if (matchedCategory) {
+      showTasks(matchedCategory);
+    }
+  }
+});
+
+    // Show Tasks
+    function showTasks(category) {
+      serviceSection.innerHTML = `
+        <h2>${category.name} - Tasks & Pricing</h2>
+        <div class="task-list">
+          <ul>
+            ${category.tasks.map(t => `<li>${t.name} - ${t.price}</li>`).join("")}
+          </ul>
+          <a class="back-btn" href="services.html">← Back to Categories</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

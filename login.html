@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - EZTAP</title>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .login-section {
+      max-width: 400px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 16px 0;
+      box-sizing: border-box;
+    }
+    .btn-primary {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: -12px;
+      margin-bottom: 12px;
+    }
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html">EZTAP</a>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html" class="active">Login</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Login Section -->
+  <section class="login-section">
+    <h2>Login to EZTAP</h2>
+    <form id="loginForm">
+      <label for="loginId">Phone Number or Email:</label>
+      <input
+        type="text"
+        id="loginId"
+        name="loginId"
+        class="input-field"
+        placeholder="Enter phone number or email"
+        required
+      />
+      <div id="loginError" class="error-message"></div>
+
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        class="input-field"
+        placeholder="Enter your password"
+        required
+      />
+      <div id="passwordError" class="error-message"></div>
+
+      <button type="submit" class="btn-primary">Login</button>
+      <p style="text-align:center;">Don’t have an account? <a href="register.html">Register here</a></p>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 EZTAP - Tap. Task. Trust.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <!-- JavaScript Validation -->
+  <!-- Validation & Login Logic -->
+<script>
+  function validateLoginId() {
+    const input = document.getElementById("loginId").value.trim();
+    const errorDiv = document.getElementById("loginError");
+    const numberRegex = /^[0-9]{10}$/;
+    const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+    if (input === "") {
+      errorDiv.textContent = "This field is required.";
+      return false;
+    }
+
+    if (numberRegex.test(input)) {
+      errorDiv.textContent = "";
+      return true;
+    } else if (emailRegex.test(input)) {
+      errorDiv.textContent = "";
+      return true;
+    } else {
+      errorDiv.textContent = "Enter a valid 10-digit phone number or email.";
+      return false;
+    }
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const loginId = document.getElementById("loginId").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const loginError = document.getElementById("loginError");
+
+    if (!validateLoginId()) return;
+
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const foundUser = users.find(u => (u.phone === loginId || u.email === loginId) && u.password === password);
+
+    if (foundUser) {
+      localStorage.setItem("loggedInUser", JSON.stringify(foundUser));
+      alert("Login successful!");
+      window.location.href = "index.html";
+    } else {
+      loginError.textContent = "Invalid credentials. Please try again or register.";
+    }
+  });
+</script>
+</body>
+</html>

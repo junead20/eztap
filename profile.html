@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EZTAP | My Profile (with Blockchain)</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color:#222;
+      color: white;
+    }
+    .navbar a { color: white; margin-left: 1rem; text-decoration: none; }
+    .navbar a.active { font-weight: bold; text-decoration: underline; }
+    .container { max-width: 1100px; margin: auto; padding: 2rem; }
+    h1 { margin-bottom: 1rem; color: #1f2937; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background-color: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 1.5rem; }
+    .card h3 { margin-top: 0; color: #111827; }
+    .progress-bar { background: #e5e7eb; border-radius: 10px; height: 12px; margin: 0.5rem 0; overflow: hidden; }
+    .progress-bar-fill { height: 100%; width: 70%; background-color: #3b82f6; }
+    .badge { background-color: #d1fae5; color: #065f46; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; margin: 5px 5px 5px 0; display: inline-block; }
+    .btn { padding: 0.45rem 0.9rem; background-color: #1e40af; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 0.5rem; }
+    .btn:hover { background-color: #1d4ed8; }
+    .small { font-size: 0.9rem; color: #555; margin-top: 0.4rem; }
+    .footer { background-color: #1e293b; color: white; text-align: center; padding: 1rem; margin-top: 2rem; }
+    .toggle { display: flex; gap: 1rem; flex-direction: column; }
+    label { font-weight: 500; }
+    input[type="file"], input[type="checkbox"] { margin-top: 0.5rem; }
+    pre.chain-view { background:#0f172a; color:#e6eef8; padding:12px; border-radius:8px; max-height:240px; overflow:auto; font-size:12px; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .meta { font-size:12px; color:#555; margin-top:6px; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <a href="index.html" style="color:white; font-weight:600;">EZTAP</a>
+    </div>
+    <nav>
+      <ul style="list-style:none; display:flex; gap:0.75rem; margin:0; padding:0;">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="tasks.html">Tasks</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="login.html" class="active">Login</a></li> 
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Profile Section -->
+  <div class="container">
+    <h1>👤 My Profile</h1>
+    <div class="grid">
+
+      <div class="card">
+        <h3>Profile Completion</h3>
+        <div class="progress-bar"><div class="progress-bar-fill"></div></div>
+        <p>70% complete – Add photo, KYC, and preferences for better visibility.</p>
+      </div>
+
+      <div class="card">
+        <h3>🪪 Verifications</h3>
+        <span class="badge">✅ Aadhaar Verified</span>
+        <span class="badge">📸 Photo Verified</span>
+        <span class="badge">🧾 Address Verified</span>
+      </div>
+
+      <div class="card">
+        <h3>🧾 My Tasks / Jobs</h3>
+        <p>Cleaning – ✅ Completed</p>
+        <p>Delivery – 🕐 Pending</p>
+        <p>Cooking – 🔄 Ongoing</p>
+        <div class="row">
+          <button id="downloadInvoiceBtn" class="btn">Download Invoice</button>
+          <button id="createTxBtn" class="btn" style="background:#065f46">Create Transaction</button>
+        </div>
+        <p class="small">Clicking "Download Invoice" records an invoice transaction on the local blockchain (demo).</p>
+      </div>
+
+      <div class="card">
+        <h3>⭐ Ratings & Reviews</h3>
+        <p>Avg Rating: ⭐⭐⭐⭐☆ (4.2)</p>
+        <p>"Ravi was super helpful!" – 5 stars</p>
+        <p>"Came late but did good work." – 3 stars</p>
+      </div>
+
+      <div class="card">
+        <h3>💳 Wallet & Earnings</h3>
+        <p>Wallet Balance: ₹800</p>
+        <div class="row">
+          <button class="btn">Recharge Wallet</button>
+          <button class="btn">Withdraw</button>
+        </div>
+        <p>Total Earnings: ₹15,000 | July: ₹2,300</p>
+      </div>
+
+      <div class="card">
+        <h3>📍 Service Preferences</h3>
+        <p>Locations: Hyderabad, Secunderabad</p>
+        <p>Services: Plumbing, Cleaning</p>
+        <p>Time: 10AM–6PM</p>
+      </div>
+
+      <div class="card">
+        <h3>📷 Profile Picture & Bio</h3>
+        <p>Hi, I’m Ravi. I love helping people with plumbing and home tasks!</p>
+        <input type="file" accept="image/*" />
+      </div>
+
+      <div class="card toggle">
+        <h3>🛡️ Safety Controls</h3>
+        <label><input type="checkbox" checked /> Only verified taskers can view my tasks</label>
+        <label><input type="checkbox" checked /> Gender preference: Female</label>
+        <label>Emergency Contact: <input type="text" placeholder="Add emergency number" /></label>
+      </div>
+
+      <div class="card toggle">
+        <h3>🔔 Notifications</h3>
+        <label><input type="checkbox" checked /> Email Notifications</label>
+        <label><input type="checkbox" /> Push Notifications</label>
+      </div>
+
+      <div class="card">
+        <h3>📄 Skill Certificates</h3>
+        <input type="file" />
+        <p>✅ Plumbing Basics Certificate uploaded</p>
+      </div>
+
+      <div class="card">
+        <h3>🔄 Switch Role</h3>
+        <button class="btn" onclick="window.location.href='tasks.html#search';">Switch to Requester</button>
+      </div>
+
+      <div class="card">
+        <h3>🗃️ Download Reports</h3>
+        <button class="btn">Download Task History</button>
+        <button class="btn">Download Transactions</button>
+      </div>
+
+      <!-- NEW: Blockchain Card -->
+      <div class="card" id="blockchainCard">
+        <h3>🔗 Local Blockchain Ledger (demo)</h3>
+        <p class="meta">Difficulty: <span id="difficultyLabel">3</span> — Chain persisted in <code>localStorage</code></p>
+
+        <div class="row" style="margin-top:10px;">
+          <button id="mineBtn" class="btn">Mine Pending Transactions</button>
+          <button id="viewChainBtn" class="btn" style="background:#0f172a">View Chain</button>
+          <button id="validateBtn" class="btn" style="background:#6b21a8">Validate Chain</button>
+          <button id="clearChainBtn" class="btn" style="background:#b91c1c">Reset Chain</button>
+        </div>
+
+        <p class="small">Pending transactions: <span id="pendingCount">0</span></p>
+        <pre id="chainView" class="chain-view" style="display:none"></pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 EZTAP. All Rights Reserved.</p>
+  </footer>
+
+<script>
+/*
+  Simple client-side blockchain implementation (educational demo).
+  Uses Web Crypto API (crypto.subtle.digest) for SHA-256 hashing.
+  Persists chain to localStorage under key "eztap_blockchain".
+*/
+
+// ---- Utilities ----
+const encoder = new TextEncoder();
+async function sha256Hex(message) {
+  const data = encoder.encode(message);
+  const hashBuf = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuf));
+  return hashArray.map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ---- Block & Blockchain classes ----
+class Block {
+  constructor(index, timestamp, transactions, nonce, previousHash) {
+    this.index = index;
+    this.timestamp = timestamp;
+    this.transactions = transactions;
+    this.nonce = nonce;
+    this.previousHash = previousHash;
+  }
+}
+
+class Blockchain {
+  constructor(difficulty = 3) {
+    this.difficulty = difficulty;
+    this.pendingTransactions = [];
+    this.chain = [];
+    // try to load from localStorage
+    const raw = localStorage.getItem('eztap_blockchain');
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        this.chain = parsed.chain || [];
+        this.pendingTransactions = parsed.pending || [];
+        // If chain empty, create genesis
+        if (this.chain.length === 0) this.createGenesis();
+      } catch(e) {
+        console.warn('Invalid saved chain, creating new.');
+        this.createGenesis();
+      }
+    } else {
+      this.createGenesis();
+    }
+  }
+
+  createGenesis() {
+    const genesis = new Block(1, Date.now(), [{info: 'Genesis Block'}], 0, '0');
+    this.chain = [genesis];
+    this.pendingTransactions = [];
+    this._save();
+  }
+
+  async _hashBlock(block) {
+    // deterministic JSON
+    const copy = {
+      index: block.index,
+      timestamp: block.timestamp,
+      transactions: block.transactions,
+      nonce: block.nonce,
+      previousHash: block.previousHash
+    };
+    const text = JSON.stringify(copy);
+    return await sha256Hex(text);
+  }
+
+  lastBlock() {
+    return this.chain[this.chain.length - 1];
+  }
+
+  newTransaction(sender, recipient, amount, meta = {}) {
+    const tx = { sender, recipient, amount, meta, timestamp: Date.now() };
+    this.pendingTransactions.push(tx);
+    this._save();
+    return tx;
+  }
+
+  async proofIsValid(previousHash, block, difficulty = this.difficulty) {
+    const hash = await this._hashBlock(block);
+    return hash.startsWith('0'.repeat(difficulty)) && block.previousHash === previousHash;
+  }
+
+  async minePending(minerAddress = 'local-miner') {
+    if (this.pendingTransactions.length === 0) {
+      throw new Error('No pending transactions to mine');
+    }
+    const index = this.lastBlock().index + 1;
+    const timestamp = Date.now();
+    // reward transaction
+    const reward = { sender: "SYSTEM", recipient: minerAddress, amount: 1, meta:{reward:true}, timestamp: Date.now() };
+    const txs = [...this.pendingTransactions, reward];
+    let nonce = 0;
+    const previousHash = await this._hashBlock(this.lastBlock());
+    // asynchronous mining loop to avoid blocking UI
+    const target = '0'.repeat(this.difficulty);
+    return new Promise((resolve, reject) => {
+      const attempt = async () => {
+        const candidate = new Block(index, timestamp, txs, nonce, previousHash);
+        const h = await this._hashBlock(candidate);
+        if (h.startsWith(target)) {
+          this.chain.push(candidate);
+          this.pendingTransactions = [];
+          this._save();
+          resolve({ block: candidate, hash: h });
+        } else {
+          nonce++;
+          // yield to UI every 50 iterations
+          if (nonce % 50 === 0) {
+            setTimeout(attempt, 0);
+          } else {
+            attempt();
+          }
+        }
+      };
+      attempt();
+    });
+  }
+
+  isValidChain(chain = this.chain) {
+    // synchronous validation uses Promise for hashing — we return a Promise<boolean>
+    return (async () => {
+      for (let i = 1; i < chain.length; i++) {
+        const prev = chain[i-1];
+        const curr = chain[i];
+        const prevHash = await sha256Hex(JSON.stringify({
+          index: prev.index,
+          timestamp: prev.timestamp,
+          transactions: prev.transactions,
+          nonce: prev.nonce,
+          previousHash: prev.previousHash
+        }));
+        // check previousHash consistency
+        if (curr.previousHash !== prevHash) return false;
+        // check proof difficulty
+        const currHash = await sha256Hex(JSON.stringify({
+          index: curr.index,
+          timestamp: curr.timestamp,
+          transactions: curr.transactions,
+          nonce: curr.nonce,
+          previousHash: curr.previousHash
+        }));
+        if (!currHash.startsWith('0'.repeat(this.difficulty))) return false;
+      }
+      return true;
+    })();
+  }
+
+  _save() {
+    localStorage.setItem('eztap_blockchain', JSON.stringify({
+      chain: this.chain,
+      pending: this.pendingTransactions,
+      difficulty: this.difficulty
+    }));
+    updateUI();
+  }
+
+  reset() {
+    localStorage.removeItem('eztap_blockchain');
+    this.createGenesis();
+    updateUI();
+  }
+}
+
+// ---- Instantiate and wire to UI ----
+const bc = new Blockchain(3);
+document.getElementById('difficultyLabel').innerText = bc.difficulty;
+const pendingCountEl = document.getElementById('pendingCount');
+const chainViewEl = document.getElementById('chainView');
+
+function updateUI() {
+  pendingCountEl.innerText = bc.pendingTransactions.length;
+}
+
+// create transaction button (manual)
+document.getElementById('createTxBtn').addEventListener('click', () => {
+  // sample transaction — in real app you'd use real data
+  const tx = bc.newTransaction('ravi@example.com', 'eztap@service', 250, {type:'service-payment', note:'Cleaning job #432'});
+  alert('Transaction created:\n' + JSON.stringify(tx, null, 2));
+  updateUI();
+});
+
+// download invoice button triggers a transaction + auto-mine for demo
+document.getElementById('downloadInvoiceBtn').addEventListener('click', async () => {
+  const tx = bc.newTransaction('ravi@example.com', 'eztap@invoice', 1200, {type:'invoice', note:'Invoice for July job'});
+  updateUI();
+  // auto-mine (background)
+  document.getElementById('mineBtn').disabled = true;
+  document.getElementById('mineBtn').innerText = 'Mining...';
+  try {
+    const res = await bc.minePending('ravi-miner');
+    alert('Invoice recorded in block #' + res.block.index + '\\nHash: ' + res.hash.slice(0,24) + '...');
+  } catch (e) {
+    alert('Mining failed: ' + e.message);
+  } finally {
+    document.getElementById('mineBtn').disabled = false;
+    document.getElementById('mineBtn').innerText = 'Mine Pending Transactions';
+    updateUI();
+  }
+});
+
+// manual mine button
+document.getElementById('mineBtn').addEventListener('click', async () => {
+  if (bc.pendingTransactions.length === 0) {
+    alert('No pending transactions to mine.');
+    return;
+  }
+  document.getElementById('mineBtn').disabled = true;
+  document.getElementById('mineBtn').innerText = 'Mining...';
+  try {
+    const res = await bc.minePending('ravi-miner');
+    alert('Mined block #' + res.block.index + '\\nHash: ' + res.hash);
+  } catch (e) {
+    alert('Mining error: ' + e.message);
+  } finally {
+    document.getElementById('mineBtn').disabled = false;
+    document.getElementById('mineBtn').innerText = 'Mine Pending Transactions';
+    updateUI();
+  }
+});
+
+// view chain
+document.getElementById('viewChainBtn').addEventListener('click', () => {
+  const pretty = JSON.stringify(bc.chain, null, 2);
+  chainViewEl.style.display = 'block';
+  chainViewEl.textContent = pretty;
+  chainViewEl.scrollTop = 0;
+});
+
+// validate chain
+document.getElementById('validateBtn').addEventListener('click', async () => {
+  document.getElementById('validateBtn').disabled = true;
+  document.getElementById('validateBtn').innerText = 'Checking...';
+  const ok = await bc.isValidChain();
+  if (ok) {
+    alert('Chain is valid 👍');
+  } else {
+    alert('Chain is INVALID ⚠️');
+  }
+  document.getElementById('validateBtn').disabled = false;
+  document.getElementById('validateBtn').innerText = 'Validate Chain';
+  updateUI();
+});
+
+// reset chain
+document.getElementById('clearChainBtn').addEventListener('click', () => {
+  if (confirm('Reset local blockchain? This will remove all stored blocks (keeps nothing).')) {
+    bc.reset();
+    chainViewEl.style.display = 'none';
+    alert('Local blockchain reset.');
+  }
+});
+
+// initial UI update
+updateUI();
+</script>
+</body>
+</html>
